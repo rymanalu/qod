@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+'use strict'
+
+const axios = require('axios')
+const chalk = require('chalk')
+
+async function qod() {
+  try {
+    const { data: { contents } } = await axios({
+      url: 'https://quotes.rest/qod',
+      headers: { 'Accept': 'application/json' }
+    })
+
+    console.log(chalk.white('Here is quote of the day:'))
+
+    const quote = contents.quotes[0].quote
+    const author = contents.quotes[0].author
+
+    console.log(chalk.green(`${quote} - ${author}`))
+  } catch (e) {
+    console.log(chalk.red(e.message))
+  }
+}
+
+qod()
